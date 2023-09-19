@@ -3,10 +3,10 @@
 These steps would be useful for customers at the beginning of their journey with Azure OpenAI - and wanting to perform:
 
 * Fronting their openAi endpoints with Azure APIM Rate limiting based on api-key header / or authorization headers
-* Simple Load balancing across multiple openAI backend endpoints to handle Throttle events (429s). the load balancing piece was inspired by this [StackOverflow post](https://stackoverflow.com/questions/76188072/in-azure-api-management-how-can-you-load-balance-and-failover-on-3-different-ba)
+* Simple Load balancing across multiple openAI backend endpoints to handle Throttle events (429s). The load balancing piece was inspired by this [StackOverflow post](https://stackoverflow.com/questions/76188072/in-azure-api-management-how-can-you-load-balance-and-failover-on-3-different-ba)
 
 
-Please note that you APIM is not natively designed to be a load balancer - but with the below APIM policies we can make it smart in the way it routes requests to different backends based on HTTP response codes - before sending the responses back to the clients.
+Please note that APIM is not natively designed to be a load balancer - but with the below APIM policies we can make it smart in the way it routes requests to different backends based on HTTP response codes - before sending the responses back to the clients.
 
 Like anything in life - there are many other approaches to perform the load balancing / smart routing piece. You could leverage an Azure Application gateway, other reverse proxy technolocies between APIM and the openAI endpoint and leveraging custom routing rules, or another option is to use a simple webapi to perform the load balancing work for you such as this [sample](https://github.com/anevjes/openAiLoadBalancer) I have also written. The reason why I have chosen using APIM for smart routing is simply to reduce additinal needs for more components given most customers in azure will already have APIM stood up and will use it for rate limiting already.
 
